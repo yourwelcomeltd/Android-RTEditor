@@ -24,6 +24,8 @@ import com.onegravity.rteditor.spans.BoldSpan;
 import com.onegravity.rteditor.spans.ForegroundColorSpan;
 import com.onegravity.rteditor.spans.ItalicSpan;
 import com.onegravity.rteditor.spans.LinkSpan;
+import com.onegravity.rteditor.spans.ParagraphStyle;
+import com.onegravity.rteditor.spans.ParagraphStyleSpan;
 import com.onegravity.rteditor.spans.StrikethroughSpan;
 import com.onegravity.rteditor.spans.SubscriptSpan;
 import com.onegravity.rteditor.spans.SuperscriptSpan;
@@ -51,6 +53,7 @@ public class Effects {
     public static final NumberEffect NUMBER = new NumberEffect();                                      // boolean effect
     public static final IndentationEffect INDENTATION = new IndentationEffect();                       // non-boolean effect
     public static final AlignmentEffect ALIGNMENT = new AlignmentEffect();                             // non-boolean effect
+    public static final ParagraphStyleEffect PARAGRAPH_STYLE = new ParagraphStyleEffect();             // non-boolean effect
 
     /*
      * ALL_EFFECTS is a list of all defined effects, for simpler iteration over all effects.
@@ -76,6 +79,7 @@ public class Effects {
         ALL_EFFECTS.add(NUMBER);
         ALL_EFFECTS.add(INDENTATION);
         ALL_EFFECTS.add(ALIGNMENT);
+        ALL_EFFECTS.add(PARAGRAPH_STYLE);
     }
 
     /*
@@ -102,6 +106,7 @@ public class Effects {
         FORMATTING_EFFECTS.add(NUMBER);
         FORMATTING_EFFECTS.add(INDENTATION);
         FORMATTING_EFFECTS.add(ALIGNMENT);
+        FORMATTING_EFFECTS.add(PARAGRAPH_STYLE);
     }
 
     /**
@@ -116,6 +121,7 @@ public class Effects {
         cleanupParagraphs(editor, Effects.INDENTATION, exclude);
         cleanupParagraphs(editor, Effects.BULLET, exclude);
         cleanupParagraphs(editor, Effects.NUMBER, exclude);
+        cleanupParagraphs(editor, Effects.PARAGRAPH_STYLE, exclude);
     }
 
     private static void cleanupParagraphs(RTEditText editor, ParagraphEffect effect, Effect...exclude) {

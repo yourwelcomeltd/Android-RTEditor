@@ -46,6 +46,8 @@ import com.onegravity.rteditor.spans.IndentationSpan;
 import com.onegravity.rteditor.spans.ItalicSpan;
 import com.onegravity.rteditor.spans.LinkSpan;
 import com.onegravity.rteditor.spans.NumberSpan;
+import com.onegravity.rteditor.spans.ParagraphStyle;
+import com.onegravity.rteditor.spans.ParagraphStyleSpan;
 import com.onegravity.rteditor.spans.StrikethroughSpan;
 import com.onegravity.rteditor.spans.SubscriptSpan;
 import com.onegravity.rteditor.spans.SuperscriptSpan;
@@ -315,7 +317,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         if (tag.equalsIgnoreCase("br")) {
             handleBr();
         } else if (tag.equalsIgnoreCase("p")) {
-            handleP();
+            //handleP();
         } else if (tag.equalsIgnoreCase("div")) {
             endDiv();
         } else if (tag.equalsIgnoreCase("ul")) {
@@ -362,7 +364,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         } else if (tag.length() == 2 &&
                 Character.toLowerCase(tag.charAt(0)) == 'h' &&
                 tag.charAt(1) >= '1' && tag.charAt(1) <= '6') {
-            handleP();
+            //handleP();
             endHeader();
         } else if (sIgnoreTags.contains(tag.toLowerCase(Locale.getDefault()))) {
             mIgnoreContent = false;
@@ -545,12 +547,12 @@ public class ConverterHtmlToSpanned implements ContentHandler {
 
     private void handleP() {
         int len = mResult.length();
-        if (len >= 1 && mResult.charAt(len - 1) == '\n') {
+        /*if (len >= 1 && mResult.charAt(len - 1) == '\n') {
             if (len < 2 || mResult.charAt(len - 2) != '\n') {
                 mResult.append("\n");
             }
-        } else if (len != 0) {
-            mResult.append("\n\n");
+        } else*/ if (len != 0) {
+            mResult.append("\n");
         }
     }
 
@@ -755,8 +757,20 @@ public class ConverterHtmlToSpanned implements ContentHandler {
 
         if (where != len) {
             Header h = (Header) obj;
-            mResult.setSpan(new RelativeSizeSpan(HEADER_SIZES[h.mLevel]), where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mResult.setSpan(new BoldSpan(), where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            //mResult.setSpan(new RelativeSizeSpan(HEADER_SIZES[h.mLevel]), where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            //mResult.setSpan(new BoldSpan(), where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ParagraphStyle styles[] = {
+                    ParagraphStyle.H1,
+                    ParagraphStyle.H2,
+                    ParagraphStyle.H3,
+                    ParagraphStyle.H4,
+                    ParagraphStyle.H5,
+                    ParagraphStyle.H6
+            };
+            if(h.mLevel >= 0 && h.mLevel < styles.length)
+            {
+                mResult.setSpan(new ParagraphStyleSpan(styles[h.mLevel]), where, len, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
         }
     }
 

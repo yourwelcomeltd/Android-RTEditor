@@ -23,6 +23,7 @@ import com.onegravity.rteditor.spans.AlignmentSpan;
 import com.onegravity.rteditor.spans.BulletSpan;
 import com.onegravity.rteditor.spans.IndentationSpan;
 import com.onegravity.rteditor.spans.NumberSpan;
+import com.onegravity.rteditor.spans.ParagraphStyleSpan;
 
 /*
  * This is a helper class for converting from Spanned to HTML and back.
@@ -35,14 +36,38 @@ public enum ParagraphType {
     BULLET("<ul>", "</ul>", "<li>", "</li>", false, true),
     NUMBERING("<ol>", "</ol>", "<li>", "</li>", false, true),
     INDENTATION_UL("<ul style='list-style-type:none;'>", "</ul>", "<li style='list-style-type:none;'>", "</li>", false, true),
-    INDENTATION_OL("<ol style='list-style-type:none;'>", "</ol>", "<li style='list-style-type:none;'>", "</li>", false, true);
+    INDENTATION_OL("<ol style='list-style-type:none;'>", "</ol>", "<li style='list-style-type:none;'>", "</li>", false, true),
+    P("<p>", "</p>", "", "", true, true),
+    H1("<h1>", "</h1>", "", "", true, true),
+    H2("<h2>", "</h2>", "", "", true, true),
+    H3("<h3>", "</h3>", "", "", true, true),
+    H4("<h4>", "</h4>", "", "", true, true),
+    H5("<h5>", "</h5>", "", "", true, true),
+    H6("<h6>", "</h6>", "", "", true, true);
+
 
     public static ParagraphType getInstance(ParagraphStyle style) {
-        if (style instanceof AlignmentSpan) {
+        if (style instanceof AlignmentSpan)
+        {
             Layout.Alignment align = ((AlignmentSpan) style).getValue();
-            return align == Layout.Alignment.ALIGN_NORMAL ? ParagraphType.ALIGNMENT_LEFT :
-                   align == Layout.Alignment.ALIGN_CENTER ? ParagraphType.ALIGNMENT_CENTER :
-                   ParagraphType.ALIGNMENT_RIGHT;
+            return align == Layout.Alignment.ALIGN_NORMAL ? ParagraphType.ALIGNMENT_LEFT : align == Layout.Alignment.ALIGN_CENTER ? ParagraphType.ALIGNMENT_CENTER : ParagraphType.ALIGNMENT_RIGHT;
+        }
+        else if(style instanceof com.onegravity.rteditor.spans.ParagraphStyleSpan)
+        {
+            com.onegravity.rteditor.spans.ParagraphStyleSpan paragraphStyleSpan = (ParagraphStyleSpan) style;
+            switch(paragraphStyleSpan.getValue())
+            {
+                case H1: return ParagraphType.H1;
+                case H2: return ParagraphType.H2;
+                case H3: return ParagraphType.H3;
+                case H4: return ParagraphType.H4;
+                case H5: return ParagraphType.H5;
+                case H6: return ParagraphType.H6;
+
+                case P:
+                default:
+                    return ParagraphType.P;
+            }
         } else {
             return style instanceof BulletSpan ? ParagraphType.BULLET :
                    style instanceof NumberSpan ? ParagraphType.NUMBERING :

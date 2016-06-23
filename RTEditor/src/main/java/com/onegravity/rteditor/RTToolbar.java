@@ -20,6 +20,7 @@ import android.text.Layout;
 import android.view.ViewGroup;
 
 import com.onegravity.rteditor.fonts.RTTypeface;
+import com.onegravity.rteditor.spans.ParagraphStyle;
 
 /**
  * An interface describing a rich text toolbar.
@@ -97,5 +98,9 @@ public interface RTToolbar {
     public void removeFontColor();
 
     public void removeBGColor();
+
+    public void setParagraphStyle(ParagraphStyle style);
+
+    public void removeParagraphStyle();
 
 }

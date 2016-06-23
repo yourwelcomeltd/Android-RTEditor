@@ -30,6 +30,11 @@
         android:background="?attr/actionBarItemBackground"
         android:orientation="horizontal">
 
+        <Spinner
+            android:id="@+id/toolbar_paragraphstyle"
+            style="?attr/rte_ToolbarSpinner"
+            android:background="?attr/rte_icToolbarFont"/>
+
         <com.onegravity.rteditor.toolbar.RTToolbarImageButton
             android:id="@+id/toolbar_bold"
             style="@style/RTE_ToolbarButton"

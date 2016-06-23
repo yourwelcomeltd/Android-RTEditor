@@ -37,11 +37,13 @@ import com.onegravity.rteditor.RTToolbarListener;
 import com.onegravity.rteditor.effects.Effects;
 import com.onegravity.rteditor.fonts.FontManager;
 import com.onegravity.rteditor.fonts.RTTypeface;
+import com.onegravity.rteditor.spans.ParagraphStyle;
 import com.onegravity.rteditor.toolbar.spinner.BGColorSpinnerItem;
 import com.onegravity.rteditor.toolbar.spinner.ColorSpinnerItem;
 import com.onegravity.rteditor.toolbar.spinner.FontColorSpinnerItem;
 import com.onegravity.rteditor.toolbar.spinner.FontSizeSpinnerItem;
 import com.onegravity.rteditor.toolbar.spinner.FontSpinnerItem;
+import com.onegravity.rteditor.toolbar.spinner.ParagraphStyleSpinnerItem;
 import com.onegravity.rteditor.toolbar.spinner.SpinnerItem;
 import com.onegravity.rteditor.toolbar.spinner.SpinnerItemAdapter;
 import com.onegravity.rteditor.toolbar.spinner.SpinnerItems;
@@ -103,6 +105,9 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
 
     private Spinner mBGColor;
     private SpinnerItemAdapter<? extends ColorSpinnerItem> mBGColorAdapter;
+
+    private Spinner mParagraphStyle;
+    private SpinnerItemAdapter<? extends ParagraphStyleSpinnerItem> mParagraphStyleAdapter;
 
     private int mCustomColorFont = Color.BLACK;
     private int mCustomColorBG = Color.BLACK;
@@ -170,31 +175,38 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
 
         // configure font button
         mFont = (Spinner) findViewById(R.id.toolbar_font);
-        mFontAdapter = createDropDownNav(mFont,
-                R.layout.rte_toolbar_font_spinner,
-                R.layout.rte_toolbar_spinner_item,
-                getFontItems(), mFontListener);
+        if(mFont != null)
+        {
+            mFontAdapter = createDropDownNav(mFont, R.layout.rte_toolbar_font_spinner, R.layout.rte_toolbar_spinner_item, getFontItems(), mFontListener);
+        }
 
         // configure font size button
         mFontSize = (Spinner) findViewById(R.id.toolbar_fontsize);
-        mFontSizeAdapter = createDropDownNav(mFontSize,
-                R.layout.rte_toolbar_fontsize_spinner,
-                R.layout.rte_toolbar_spinner_item,
-                getTextSizeItems(), mFontSizeListener);
+        if(mFontSize != null)
+        {
+            mFontSizeAdapter = createDropDownNav(mFontSize, R.layout.rte_toolbar_fontsize_spinner, R.layout.rte_toolbar_spinner_item, getTextSizeItems(), mFontSizeListener);
+        }
 
         // configure font color button
         mFontColor = (Spinner) findViewById(R.id.toolbar_fontcolor);
-        mFontColorAdapter = createDropDownNav(mFontColor,
-                R.layout.rte_toolbar_fontcolor_spinner,
-                R.layout.rte_toolbar_fontcolor_spinner_item,
-                getFontColorItems(), mFontColorListener);
+        if(mFontColor != null)
+        {
+            mFontColorAdapter = createDropDownNav(mFontColor, R.layout.rte_toolbar_fontcolor_spinner, R.layout.rte_toolbar_fontcolor_spinner_item, getFontColorItems(), mFontColorListener);
+        }
 
         // configure bg color button
         mBGColor = (Spinner) findViewById(R.id.toolbar_bgcolor);
-        mBGColorAdapter = createDropDownNav(mBGColor,
-                R.layout.rte_toolbar_bgcolor_spinner,
-                R.layout.rte_toolbar_bgcolor_spinner_item,
-                getBGColorItems(), mBGColorListener);
+        if(mBGColor != null)
+        {
+            mBGColorAdapter = createDropDownNav(mBGColor, R.layout.rte_toolbar_bgcolor_spinner, R.layout.rte_toolbar_bgcolor_spinner_item, getBGColorItems(), mBGColorListener);
+        }
+
+        // configure paragraph style
+        mParagraphStyle = (Spinner) findViewById(R.id.toolbar_paragraphstyle);
+        if(mParagraphStyle != null)
+        {
+            mParagraphStyleAdapter = createDropDownNav(mParagraphStyle, R.layout.rte_toolbar_paragraphstyle_spinner, R.layout.rte_toolbar_paragraphstyle_spinner_item, getParagraphStyleSpinnerItems(), mParagraphStyleListener);
+        }
     }
 
     private RTToolbarImageButton initImageButton(int id) {
@@ -283,6 +295,29 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
         // custom color
         name = context.getString(R.string.rte_toolbar_color_custom);
         spinnerItem = new BGColorSpinnerItem(mCustomColorFont, name, false, true);
+        spinnerItems.add(spinnerItem);
+
+        return spinnerItems;
+    }
+
+    private SpinnerItems<ParagraphStyleSpinnerItem> getParagraphStyleSpinnerItems() {
+        SpinnerItems<ParagraphStyleSpinnerItem> spinnerItems = new SpinnerItems<ParagraphStyleSpinnerItem>();
+        Context context = getContext();
+
+        ParagraphStyleSpinnerItem spinnerItem = new ParagraphStyleSpinnerItem(ParagraphStyle.P);
+        spinnerItems.add(spinnerItem);
+
+        spinnerItem = new ParagraphStyleSpinnerItem(ParagraphStyle.H1);
+        spinnerItems.add(spinnerItem);
+        spinnerItem = new ParagraphStyleSpinnerItem(ParagraphStyle.H2);
+        spinnerItems.add(spinnerItem);
+        spinnerItem = new ParagraphStyleSpinnerItem(ParagraphStyle.H3);
+        spinnerItems.add(spinnerItem);
+        spinnerItem = new ParagraphStyleSpinnerItem(ParagraphStyle.H4);
+        spinnerItems.add(spinnerItem);
+        spinnerItem = new ParagraphStyleSpinnerItem(ParagraphStyle.H5);
+        spinnerItems.add(spinnerItem);
+        spinnerItem = new ParagraphStyleSpinnerItem(ParagraphStyle.H6);
         spinnerItems.add(spinnerItem);
 
         return spinnerItems;
@@ -495,6 +530,33 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
         }
     }
 
+    @Override
+    public void setParagraphStyle(ParagraphStyle style)
+    {
+        if(mParagraphStyle != null)
+        {
+            for (int pos = 0; pos < mParagraphStyleAdapter.getCount(); pos++)
+            {
+                ParagraphStyleSpinnerItem item = mParagraphStyleAdapter.getItem(pos);
+                if (item.getParagraphStyle() == style)
+                {
+                    mParagraphStyleAdapter.setSelectedItem(pos);
+                    mParagraphStyle.setSelection(pos);
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void removeParagraphStyle()
+    {
+        if (mParagraphStyle != null) {
+            mParagraphStyleAdapter.setSelectedItem(0);
+            mParagraphStyle.setSelection(0);
+        }
+    }
+
     // ****************************************** Item Selected Methods *******************************************
 
     interface DropDownNavListener<T extends SpinnerItem> {
@@ -571,6 +633,14 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
                 Integer color = spinnerItem.isEmpty() ? null : spinnerItem.getColor();
                 mListener.onEffectSelected(Effects.BGCOLOR, color);
             }
+        }
+    };
+
+    private DropDownNavListener<ParagraphStyleSpinnerItem> mParagraphStyleListener = new DropDownNavListener<ParagraphStyleSpinnerItem>() {
+        @Override
+        public void onItemSelected(ParagraphStyleSpinnerItem spinnerItem, int position) {
+            ParagraphStyle style = spinnerItem.getParagraphStyle();
+            mListener.onEffectSelected(Effects.PARAGRAPH_STYLE, style);
         }
     };
 

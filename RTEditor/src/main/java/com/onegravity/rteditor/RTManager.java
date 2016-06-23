@@ -47,6 +47,7 @@ import com.onegravity.rteditor.effects.Effects;
 import com.onegravity.rteditor.effects.ForegroundColorEffect;
 import com.onegravity.rteditor.effects.ItalicEffect;
 import com.onegravity.rteditor.effects.NumberEffect;
+import com.onegravity.rteditor.effects.ParagraphStyleEffect;
 import com.onegravity.rteditor.effects.SpanCollectMode;
 import com.onegravity.rteditor.effects.StrikethroughEffect;
 import com.onegravity.rteditor.effects.SubscriptEffect;
@@ -58,6 +59,7 @@ import com.onegravity.rteditor.media.choose.MediaChooserActivity;
 import com.onegravity.rteditor.media.choose.MediaEvent;
 import com.onegravity.rteditor.spans.ImageSpan;
 import com.onegravity.rteditor.spans.LinkSpan;
+import com.onegravity.rteditor.spans.ParagraphStyle;
 import com.onegravity.rteditor.spans.RTSpan;
 import com.onegravity.rteditor.utils.Constants.MediaAction;
 import com.onegravity.rteditor.utils.Helper;
@@ -585,6 +587,7 @@ public class RTManager implements RTToolbarListener, RTEditTextListener {
         List<Integer> sizes = null;
         List<Integer> fontColors = null;
         List<Integer> bgColors = null;
+        List<ParagraphStyle> paragraphStyles = null;
 
         // check if effect exists in selection
         for (Effect effect : Effects.ALL_EFFECTS) {
@@ -615,6 +618,8 @@ public class RTManager implements RTToolbarListener, RTEditTextListener {
                     fontColors = Effects.FONTCOLOR.valuesInSelection(editor);
                 } else if (effect instanceof BackgroundColorEffect) {
                     bgColors = Effects.BGCOLOR.valuesInSelection(editor);
+                } else if (effect instanceof ParagraphStyleEffect) {
+                    paragraphStyles = Effects.PARAGRAPH_STYLE.valuesInSelection(editor);
                 }
             }
         }
@@ -667,6 +672,14 @@ public class RTManager implements RTToolbarListener, RTEditTextListener {
                 toolbar.setBGColor(bgColors.get(0));
             } else {
                 toolbar.removeBGColor();
+            }
+
+            // Paragraph styles
+            if(paragraphStyles != null && paragraphStyles.size() == 1) {
+                toolbar.setParagraphStyle(paragraphStyles.get(0));
+            }
+            else {
+                toolbar.removeParagraphStyle();
             }
         }
     }
