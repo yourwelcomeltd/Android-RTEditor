@@ -349,7 +349,7 @@ public class RTManager implements RTToolbarListener, RTEditTextListener {
         }
 
         // only change visibility if we actually have to
-        if ((visibility == View.GONE && visible) || (visibility == View.VISIBLE && !visible)) {
+        if ((visibility != View.VISIBLE && visible) || (visibility == View.VISIBLE && !visible)) {
 
             AlphaAnimation fadeAnimation = visible ? new AlphaAnimation(0.0f, 1.0f) : new AlphaAnimation(1.0f, 0.0f);
             fadeAnimation.setDuration(400);
@@ -365,7 +365,7 @@ public class RTManager implements RTToolbarListener, RTEditTextListener {
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     synchronized (toolbarContainer) {
-                        toolbarContainer.setVisibility(mToolbarIsVisible ? View.VISIBLE : View.GONE);
+                        toolbarContainer.setVisibility(mToolbarIsVisible ? View.VISIBLE : View.INVISIBLE);
                     }
                 }
             });

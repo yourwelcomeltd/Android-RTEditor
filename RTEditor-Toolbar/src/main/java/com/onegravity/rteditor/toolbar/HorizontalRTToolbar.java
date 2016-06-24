@@ -166,7 +166,7 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
         // enable/disable capture picture depending on whether the device
         // has a camera or not
         PackageManager packageMgr = getContext().getPackageManager();
-        if (packageMgr.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+        if (packageMgr != null && packageMgr.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             initImageButton(R.id.toolbar_image_capture);
         } else {
             View imageCapture = findViewById(R.id.toolbar_image_capture);
@@ -540,6 +540,8 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
                 ParagraphStyleSpinnerItem item = mParagraphStyleAdapter.getItem(pos);
                 if (item.getParagraphStyle() == style)
                 {
+                    mParagraphStyleAdapter.updateSpinnerTitle(item.getName());
+
                     mParagraphStyleAdapter.setSelectedItem(pos);
                     mParagraphStyle.setSelection(pos);
                     break;
@@ -640,6 +642,7 @@ public class HorizontalRTToolbar extends LinearLayout implements RTToolbar, View
         @Override
         public void onItemSelected(ParagraphStyleSpinnerItem spinnerItem, int position) {
             ParagraphStyle style = spinnerItem.getParagraphStyle();
+            mParagraphStyleAdapter.updateSpinnerTitle(spinnerItem.getDisplayName(style));
             mListener.onEffectSelected(Effects.PARAGRAPH_STYLE, style);
         }
     };

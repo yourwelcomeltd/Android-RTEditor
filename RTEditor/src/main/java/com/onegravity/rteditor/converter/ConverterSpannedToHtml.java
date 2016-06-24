@@ -110,6 +110,15 @@ public class ConverterSpannedToHtml {
                 }
             }
 
+            // Get the paragraph style span if there is any
+            ParagraphType paragraphStyleType = null;
+            for (SingleParagraphStyle style : styles) {
+                if (style.getType().isParagraphStyle()) {
+                    paragraphStyleType = style.getType();
+                    break;
+                }
+            }
+
             /*
              * start tag: bullet points, numbering and indentation
              */
@@ -135,9 +144,24 @@ public class ConverterSpannedToHtml {
             }
 
             /*
+             * Paragraph style tag (p, h1, h2, etc.)
+             */
+            if (paragraphStyleType != null) {
+                mOut.append(paragraphStyleType.getStartTag());
+            }
+
+            /*
              * Convert the plain text
              */
             withinParagraph(mText, paragraph.start(), paragraph.end());
+
+            /*
+             * end tag: paragraph style (p, h1, h2, etc)
+             */
+            if (paragraphStyleType != null) {
+                removeTrailingLineBreak(paragraphStyleType);
+                mOut.append(paragraphStyleType.getEndTag());
+            }
 
             /*
              * end tag: alignment (left, center, right)
@@ -167,6 +191,16 @@ public class ConverterSpannedToHtml {
             int end = mOut.length();
             if (mOut.subSequence(start, end).equals(BR)) {
                 mOut.delete(start, end);
+
+                // If we've now got an empty tag, add in a &nbsp;
+                String startTag = type.getStartTag();
+                if(mOut.length() >= startTag.length())
+                {
+                    if(mOut.subSequence(start - startTag.length(), start).equals(startTag))
+                    {
+                        mOut.append("&nbsp;");
+                    }
+                }
             }
         }
     }

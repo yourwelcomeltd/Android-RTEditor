@@ -29,21 +29,21 @@ import com.onegravity.rteditor.spans.ParagraphStyleSpan;
  * This is a helper class for converting from Spanned to HTML and back.
  */
 public enum ParagraphType {
-    NONE("", "", "", "", false, false),
-    ALIGNMENT_LEFT("<div align=\"left\">", "</div>", "", "", true, true),
-    ALIGNMENT_CENTER("<div align=\"center\">", "</div>", "", "", true, true),
-    ALIGNMENT_RIGHT("<div align=\"right\">", "</div>", "", "", true, true),
-    BULLET("<ul>", "</ul>", "<li>", "</li>", false, true),
-    NUMBERING("<ol>", "</ol>", "<li>", "</li>", false, true),
-    INDENTATION_UL("<ul style='list-style-type:none;'>", "</ul>", "<li style='list-style-type:none;'>", "</li>", false, true),
-    INDENTATION_OL("<ol style='list-style-type:none;'>", "</ol>", "<li style='list-style-type:none;'>", "</li>", false, true),
-    P("<p>", "</p>", "", "", true, true),
-    H1("<h1>", "</h1>", "", "", true, true),
-    H2("<h2>", "</h2>", "", "", true, true),
-    H3("<h3>", "</h3>", "", "", true, true),
-    H4("<h4>", "</h4>", "", "", true, true),
-    H5("<h5>", "</h5>", "", "", true, true),
-    H6("<h6>", "</h6>", "", "", true, true);
+    NONE("", "", "", "", false, false, false),
+    ALIGNMENT_LEFT("<div align=\"left\">", "</div>", "", "", true, true, false),
+    ALIGNMENT_CENTER("<div align=\"center\">", "</div>", "", "", true, true, false),
+    ALIGNMENT_RIGHT("<div align=\"right\">", "</div>", "", "", true, true, false),
+    BULLET("<ul>", "</ul>", "<li>", "</li>", false, true, false),
+    NUMBERING("<ol>", "</ol>", "<li>", "</li>", false, true, false),
+    INDENTATION_UL("<ul style='list-style-type:none;'>", "</ul>", "<li style='list-style-type:none;'>", "</li>", false, true, false),
+    INDENTATION_OL("<ol style='list-style-type:none;'>", "</ol>", "<li style='list-style-type:none;'>", "</li>", false, true, false),
+    P("<p>", "</p>", "", "", false, true, true),
+    H1("<h1>", "</h1>", "", "", false, true, true),
+    H2("<h2>", "</h2>", "", "", false, true, true),
+    H3("<h3>", "</h3>", "", "", false, true, true),
+    H4("<h4>", "</h4>", "", "", false, true, true),
+    H5("<h5>", "</h5>", "", "", false, true, true),
+    H6("<h6>", "</h6>", "", "", false, true, true);
 
 
     public static ParagraphType getInstance(ParagraphStyle style) {
@@ -81,15 +81,17 @@ public enum ParagraphType {
     final private String mListStartTag;
     final private String mListEndTag;
     final private boolean mEndTagAddsLineBreak;
+    final private boolean mIsParagraphStyle;
 
     private ParagraphType(String startTag, String endTag, String listStartTag,
-                          String listEndTag, boolean isAlignment, boolean endTagAddsLineBreak) {
+                          String listEndTag, boolean isAlignment, boolean endTagAddsLineBreak, boolean isParagraphStyle) {
         mStartTag = startTag;
         mEndTag = endTag;
         mListStartTag = listStartTag;
         mListEndTag = listEndTag;
         mIsAlignment = isAlignment;
         mEndTagAddsLineBreak = endTagAddsLineBreak;
+        mIsParagraphStyle = isParagraphStyle;
     }
 
     public boolean isUndefined() {
@@ -98,6 +100,11 @@ public enum ParagraphType {
 
     public boolean isAlignment() {
         return mIsAlignment;
+    }
+
+    public boolean isParagraphStyle()
+    {
+        return mIsParagraphStyle;
     }
 
     public boolean isBullet() {

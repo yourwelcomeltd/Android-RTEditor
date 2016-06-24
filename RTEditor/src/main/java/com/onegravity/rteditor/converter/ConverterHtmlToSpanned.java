@@ -22,7 +22,6 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.QuoteSpan;
-import android.text.style.RelativeSizeSpan;
 
 import com.onegravity.rteditor.api.RTMediaFactory;
 import com.onegravity.rteditor.api.format.RTFormat;
@@ -87,6 +86,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
     private RTMediaFactory<? extends RTImage, ? extends RTAudio, ? extends RTVideo> mMediaFactory;
     private Parser mParser;
     private SpannableStringBuilder mResult;
+    private StringBuilder mCurrentBlockContent;
 
     private Stack<AccumulatedParagraphStyle> mParagraphStyles = new Stack<AccumulatedParagraphStyle>();
 
@@ -128,6 +128,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         }
 
         mResult = new SpannableStringBuilder();
+        mCurrentBlockContent = new StringBuilder();
         mIgnoreContent = false;
         mParagraphStyles.clear();
 
@@ -232,6 +233,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         }
 
         mResult.append(sb);
+        mCurrentBlockContent.append(sb);
     }
 
     @Override
@@ -253,14 +255,18 @@ public class ConverterHtmlToSpanned implements ContentHandler {
             // We don't need to handle this. TagSoup will ensure that there's a </br> for each <br>
             // so we can safely omit the line breaks when we handle the close tag.
         } else if (tag.equalsIgnoreCase("p")) {
-            handleP();
+            handleBlockStart();
         } else if (tag.equalsIgnoreCase("div")) {
+            handleBlockStart();
             startDiv(attributes);
         } else if (tag.equalsIgnoreCase("ul")) {
+            handleBlockStart();
             startList(false, attributes);
         } else if (tag.equalsIgnoreCase("ol")) {
+            handleBlockStart();
             startList(true, attributes);
         } else if (tag.equalsIgnoreCase("li")) {
+            handleBlockStart();
             startList(attributes);
         } else if (tag.equalsIgnoreCase("strong")) {
             start(new Bold());
@@ -285,7 +291,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         } else if (tag.equalsIgnoreCase("font")) {
             startFont(attributes);
         } else if (tag.equalsIgnoreCase("blockquote")) {
-            handleP();
+            handleBlockStart();
             start(new Blockquote());
         } else if (tag.equalsIgnoreCase("tt")) {
             start(new Monospace());
@@ -300,7 +306,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         } else if (tag.length() == 2 &&
                 Character.toLowerCase(tag.charAt(0)) == 'h' &&
                 tag.charAt(1) >= '1' && tag.charAt(1) <= '6') {
-            handleP();
+            handleBlockStart();
             start(new Header(tag.charAt(1) - '1'));
         } else if (tag.equalsIgnoreCase("img")) {
             startImg(attributes);
@@ -317,7 +323,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         if (tag.equalsIgnoreCase("br")) {
             handleBr();
         } else if (tag.equalsIgnoreCase("p")) {
-            //handleP();
+            //handleBlockStart();
         } else if (tag.equalsIgnoreCase("div")) {
             endDiv();
         } else if (tag.equalsIgnoreCase("ul")) {
@@ -351,7 +357,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         } else if (tag.equalsIgnoreCase("font")) {
             endFont();
         } else if (tag.equalsIgnoreCase("blockquote")) {
-            handleP();
+            //handleBlockStart();
             end(Blockquote.class, new QuoteSpan());
         } else if (tag.equalsIgnoreCase("a")) {
             endAHref();
@@ -364,7 +370,7 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         } else if (tag.length() == 2 &&
                 Character.toLowerCase(tag.charAt(0)) == 'h' &&
                 tag.charAt(1) >= '1' && tag.charAt(1) <= '6') {
-            //handleP();
+            //handleBlockStart();
             endHeader();
         } else if (sIgnoreTags.contains(tag.toLowerCase(Locale.getDefault()))) {
             mIgnoreContent = false;
@@ -389,10 +395,12 @@ public class ConverterHtmlToSpanned implements ContentHandler {
                 Layout.Alignment align = divObj.mAlign.equalsIgnoreCase("center") ? Layout.Alignment.ALIGN_CENTER :
                         divObj.mAlign.equalsIgnoreCase("right") ? Layout.Alignment.ALIGN_OPPOSITE : Layout.Alignment.ALIGN_NORMAL;
                 if (align != null) {
-                    if (mResult.charAt(end - 1) != '\n') {
+                    // Do we need this linefeed? Let's see what happens without it
+                    /*if (mResult.charAt(end - 1) != '\n') {
                         // yes we need that linefeed, or we will get crashes
                         mResult.append('\n');
-                    }
+                        mCurrentBlockContent.append('\n');
+                    }*/
                     // use SPAN_EXCLUSIVE_EXCLUSIVE here, will be replaced later anyway when the cleanup function is called
                     boolean isRTL = Helper.isRTL(mResult, start, end);
                     mResult.setSpan(new AlignmentSpan(align, isRTL), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -491,9 +499,12 @@ public class ConverterHtmlToSpanned implements ContentHandler {
     private void endList() {
         List list = (List) getLast(List.class);
         if (list != null) {
+            /*
             if (mResult.length() == 0 || mResult.charAt(mResult.length() - 1) != '\n') {
                 mResult.append('\n');
+                mCurrentBlockContent.append('\n');
             }
+            */
             int start = mResult.getSpanStart(list);
             int end = mResult.length();
 
@@ -545,19 +556,33 @@ public class ConverterHtmlToSpanned implements ContentHandler {
         return objs.length == 0 ? null : objs[objs.length - 1];
     }
 
-    private void handleP() {
-        int len = mResult.length();
-        /*if (len >= 1 && mResult.charAt(len - 1) == '\n') {
+    private void handleBlockStart() {
+
+        // Is there a current block with content?
+        if(mCurrentBlockContent.length() > 0)
+        {
+            // Start a new block
+            mResult.append('\n');
+            mCurrentBlockContent.setLength(0);
+        }
+        else
+        {
+            // Ignore empty blocks
+        }
+
+        /*int len = mResult.length();
+        if (len >= 1 && mResult.charAt(len - 1) == '\n') {
             if (len < 2 || mResult.charAt(len - 2) != '\n') {
                 mResult.append("\n");
             }
-        } else*/ if (len != 0) {
+        } else if (len != 0) {
             mResult.append("\n");
-        }
+        }*/
     }
 
     private void handleBr() {
-        mResult.append("\n");
+        mResult.append('\n');
+        mCurrentBlockContent.append('\n');
     }
 
     private Object getLast(Class<? extends Object> kind) {
@@ -603,7 +628,8 @@ public class ConverterHtmlToSpanned implements ContentHandler {
 
             // Unicode Character 'OBJECT REPLACEMENT CHARACTER' (U+FFFC)
             // see http://www.fileformat.info/info/unicode/char/fffc/index.htm
-            mResult.append("\uFFFC");
+            mResult.append('\uFFFC');
+            mCurrentBlockContent.append('\uFFFC');
             ImageSpan imageSpan = new ImageSpan(image, true);
             mResult.setSpan(imageSpan, len, len + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }

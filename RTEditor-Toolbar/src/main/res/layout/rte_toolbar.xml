@@ -33,7 +33,7 @@
         <Spinner
             android:id="@+id/toolbar_paragraphstyle"
             style="?attr/rte_ToolbarSpinner"
-            android:background="?attr/rte_icToolbarFont"/>
+            android:background="?attr/rte_icToolbarParagraphStyle"/>
 
         <com.onegravity.rteditor.toolbar.RTToolbarImageButton
             android:id="@+id/toolbar_bold"
