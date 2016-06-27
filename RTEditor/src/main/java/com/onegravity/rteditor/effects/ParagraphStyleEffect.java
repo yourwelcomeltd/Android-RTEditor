@@ -1,6 +1,9 @@
 package com.onegravity.rteditor.effects;
 
+import android.graphics.Paint;
 import android.text.Spannable;
+import android.text.Spanned;
+import android.text.style.LineHeightSpan;
 
 import com.onegravity.rteditor.RTEditText;
 import com.onegravity.rteditor.spans.ParagraphStyle;
