@@ -177,9 +177,6 @@ public class InetAddressValidator implements Serializable {
             }
             validOctets++;
         }
-        if (validOctets < 8 && !containsCompressedZeroes) {
-            return false;
-        }
-        return true;
+        return validOctets >= 8 || containsCompressedZeroes;
     }
 }

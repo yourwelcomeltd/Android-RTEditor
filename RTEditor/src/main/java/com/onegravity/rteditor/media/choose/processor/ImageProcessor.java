@@ -29,7 +29,7 @@ import java.io.InputStream;
 public class ImageProcessor extends MediaProcessor {
 
     public interface ImageProcessorListener extends MediaProcessorListener {
-        public void onImageProcessed(RTImage image);
+        void onImageProcessed(RTImage image);
     }
 
     private ImageProcessorListener mListener;
@@ -40,7 +40,7 @@ public class ImageProcessor extends MediaProcessor {
     }
 
     @Override
-    protected void processMedia() throws IOException, Exception {
+    protected void processMedia() throws Exception {
         InputStream in = super.getInputStream();
         if (in == null) {
             if (mListener != null) {

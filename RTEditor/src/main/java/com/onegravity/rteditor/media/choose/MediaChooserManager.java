@@ -38,7 +38,7 @@ abstract class MediaChooserManager implements MediaProcessorListener {
         /**
          * Handle any error condition if at all, when you receive this callback
          */
-        public void onError(String reason);
+        void onError(String reason);
     }
 
     transient protected MonitoredActivity mActivity;

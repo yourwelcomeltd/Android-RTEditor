@@ -33,7 +33,7 @@ class AudioChooserManager extends MediaChooserManager implements AudioProcessorL
         /**
          * Callback method to inform the caller that an audio file has been processed
          */
-        public void onAudioChosen(RTAudio audio);
+        void onAudioChosen(RTAudio audio);
     }
 
     AudioChooserManager(MonitoredActivity activity,

@@ -46,7 +46,6 @@ class RTOperationManager {
      */
     private Map<Integer, Stack<Operation>> mUndoStacks = new HashMap<Integer, Stack<Operation>>();
     private Map<Integer, Stack<Operation>> mRedoStacks = new HashMap<Integer, Stack<Operation>>();
-    ;
 
     // ****************************************** Operation Classes *******************************************
 

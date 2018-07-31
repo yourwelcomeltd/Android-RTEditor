@@ -26,7 +26,7 @@ import java.io.IOException;
 public class AudioProcessor extends MediaProcessor {
 
     public interface AudioProcessorListener extends MediaProcessorListener {
-        public void onAudioProcessed(RTAudio audio);
+        void onAudioProcessed(RTAudio audio);
     }
 
     public AudioProcessor(String originalFile, RTMediaFactory<RTImage, RTAudio, RTVideo> mediaFactory, AudioProcessorListener listener) {
@@ -34,7 +34,8 @@ public class AudioProcessor extends MediaProcessor {
     }
 
     @Override
-    protected void processMedia() throws IOException, Exception {
+    protected void processMedia()
+    {
         // TODO
     }
 

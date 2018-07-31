@@ -39,7 +39,7 @@ public interface RTProxy {
      * @param requestCode If >= 0, this code will be returned in onActivityResult() when
      *                    the activity exits.
      */
-    public void startActivityForResult(Intent intent, int requestCode);
+    void startActivityForResult(Intent intent, int requestCode);
 
     /**
      * Runs the specified action on the UI thread. If the current thread is the
@@ -49,7 +49,7 @@ public interface RTProxy {
      *
      * @param action the action to run on the UI thread
      */
-    public void runOnUiThread(Runnable action);
+    void runOnUiThread(Runnable action);
 
     /**
      * Make a standard toast that just contains a text view with the text from a
@@ -60,7 +60,7 @@ public interface RTProxy {
      * @param duration How long to display the message. Either Toast.LENGTH_SHORT or
      *                 Toast.LENGTH_LONG
      */
-    public Toast makeText(int resId, int duration);
+    Toast makeText(int resId, int duration);
 
     /**
      * Make a standard toast that just contains a text view.
@@ -69,7 +69,7 @@ public interface RTProxy {
      * @param duration How long to display the message. Either Toast.LENGTH_SHORT or
      *                 Toast.LENGTH_LONG
      */
-    public Toast makeText(CharSequence text, int duration);
+    Toast makeText(CharSequence text, int duration);
 
     /**
      * Display a DialogFragment, adding the fragment using an existing
@@ -80,7 +80,7 @@ public interface RTProxy {
      *                 FragmentTransaction.add}.
      * @param fragment The DialogFragment to show.
      */
-    public void openDialogFragment(String fragmentTag, DialogFragment fragment);
+    void openDialogFragment(String fragmentTag, DialogFragment fragment);
 
     /**
      * Remove an existing fragment. If it was added to a container, its view is
@@ -88,6 +88,6 @@ public interface RTProxy {
      *
      * @param fragmentTag The tag of the fragment to remove.
      */
-    public void removeFragment(String fragmentTag);
+    void removeFragment(String fragmentTag);
 
 }

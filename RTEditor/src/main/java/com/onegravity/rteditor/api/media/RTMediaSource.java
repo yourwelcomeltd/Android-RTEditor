@@ -35,7 +35,6 @@ import java.io.InputStream;
 public class RTMediaSource {
     private final RTMediaType mMediaType;
     private final InputStream mIn;
-    ;
     private final String mName;
     private final String mMimeType;
 

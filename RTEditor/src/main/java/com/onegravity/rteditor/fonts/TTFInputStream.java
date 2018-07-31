@@ -24,8 +24,8 @@ import java.io.IOException;
  * AssetInputStream to read fonts from the assets folder and RandomAccessFile to read system fonts.
  */
 public interface TTFInputStream extends Closeable {
-    public int read (byte[] b) throws IOException;
-    public int read () throws IOException;
-    public void seek(long pos) throws IOException;
-    public void close() throws IOException;
+    int read(byte[] b) throws IOException;
+    int read() throws IOException;
+    void seek(long pos) throws IOException;
+    void close() throws IOException;
 }

@@ -33,7 +33,7 @@ import java.util.EnumSet;
  */
 public class NumericEntityUnescaper extends CharSequenceTranslator {
 
-    public static enum OPTION {semiColonRequired, semiColonOptional, errorIfNoSemiColon}
+    public enum OPTION {semiColonRequired, semiColonOptional, errorIfNoSemiColon}
 
     private final EnumSet<OPTION> options;
 
@@ -57,7 +57,7 @@ public class NumericEntityUnescaper extends CharSequenceTranslator {
         if (options.length > 0) {
             this.options = EnumSet.copyOf(Arrays.asList(options));
         } else {
-            this.options = EnumSet.copyOf(Arrays.asList(new OPTION[]{OPTION.semiColonRequired}));
+            this.options = EnumSet.copyOf(Arrays.asList(OPTION.semiColonRequired));
         }
     }
 
@@ -68,7 +68,7 @@ public class NumericEntityUnescaper extends CharSequenceTranslator {
      * @return whether the option is set
      */
     public boolean isSet(final OPTION option) {
-        return options == null ? false : options.contains(option);
+        return options != null && options.contains(option);
     }
 
     /**

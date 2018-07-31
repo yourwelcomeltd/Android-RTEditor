@@ -41,11 +41,11 @@ public interface RTMediaFactory<I extends RTImage, A extends RTAudio, V extends 
      * area because the app needs access to them even if the source object isn't
      * available any more (deleted or no access any more).
      */
-    public I createImage(RTMediaSource mediaSource);
+    I createImage(RTMediaSource mediaSource);
 
-    public A createAudio(RTMediaSource mediaSource);
+    A createAudio(RTMediaSource mediaSource);
 
-    public V createVideo(RTMediaSource mediaSource);
+    V createVideo(RTMediaSource mediaSource);
 
     /**
      * Use case 2: Load a rich text with referenced media objects into the rich
@@ -66,10 +66,10 @@ public interface RTMediaFactory<I extends RTImage, A extends RTAudio, V extends 
      * files) or if we want to use more than one storage area depending on the
      * use case (e.g. ContentProvider vs. SQLite database).
      */
-    public I createImage(String path);
+    I createImage(String path);
 
-    public A createAudio(String path);
+    A createAudio(String path);
 
-    public V createVideo(String path);
+    V createVideo(String path);
 
 }

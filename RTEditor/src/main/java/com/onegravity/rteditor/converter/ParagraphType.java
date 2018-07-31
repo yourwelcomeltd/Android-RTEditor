@@ -83,8 +83,7 @@ public enum ParagraphType {
     final private boolean mEndTagAddsLineBreak;
     final private boolean mIsParagraphStyle;
 
-    private ParagraphType(String startTag, String endTag, String listStartTag,
-                          String listEndTag, boolean isAlignment, boolean endTagAddsLineBreak, boolean isParagraphStyle) {
+    ParagraphType(String startTag, String endTag, String listStartTag, String listEndTag, boolean isAlignment, boolean endTagAddsLineBreak, boolean isParagraphStyle) {
         mStartTag = startTag;
         mEndTag = endTag;
         mListStartTag = listStartTag;

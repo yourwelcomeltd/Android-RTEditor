@@ -53,11 +53,11 @@ public interface RTEditTextListener {
     /**
      * A link in a LinkSpan has been clicked.
      */
-    public void onClick(RTEditText editor, LinkSpan span);
+    void onClick(RTEditText editor, LinkSpan span);
 
     /**
      * Rich text editing was enabled/disabled for this editor.
      */
-    public void onRichTextEditingChanged(RTEditText editor, boolean useRichText);
+    void onRichTextEditingChanged(RTEditText editor, boolean useRichText);
 
 }

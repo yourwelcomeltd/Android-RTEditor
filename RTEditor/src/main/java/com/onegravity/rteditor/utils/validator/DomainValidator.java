@@ -1099,7 +1099,7 @@ public class DomainValidator implements Serializable {
         private static Method getMethod() {
             try {
                 Class clazz = Class.forName("java.net.IDN", false, DomainValidator.class.getClassLoader());
-                return clazz.getDeclaredMethod("toASCII", new Class[]{String.class});
+                return clazz.getDeclaredMethod("toASCII", String.class);
             } catch (Exception e) {
               return null;
             }

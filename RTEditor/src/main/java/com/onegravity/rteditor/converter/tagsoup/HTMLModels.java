@@ -25,28 +25,28 @@ package com.onegravity.rteditor.converter.tagsoup;
 public interface HTMLModels {
 
     // Start of model definitions
-    public static final int M_AREA = 1 << 1;
-    public static final int M_BLOCK = 1 << 2;
-    public static final int M_BLOCKINLINE = 1 << 3;
-    public static final int M_BODY = 1 << 4;
-    public static final int M_CELL = 1 << 5;
-    public static final int M_COL = 1 << 6;
-    public static final int M_DEF = 1 << 7;
-    public static final int M_FORM = 1 << 8;
-    public static final int M_FRAME = 1 << 9;
-    public static final int M_HEAD = 1 << 10;
-    public static final int M_HTML = 1 << 11;
-    public static final int M_INLINE = 1 << 12;
-    public static final int M_LEGEND = 1 << 13;
-    public static final int M_LI = 1 << 14;
-    public static final int M_NOLINK = 1 << 15;
-    public static final int M_OPTION = 1 << 16;
-    public static final int M_OPTIONS = 1 << 17;
-    public static final int M_P = 1 << 18;
-    public static final int M_PARAM = 1 << 19;
-    public static final int M_TABLE = 1 << 20;
-    public static final int M_TABULAR = 1 << 21;
-    public static final int M_TR = 1 << 22;
+    int M_AREA = 1 << 1;
+    int M_BLOCK = 1 << 2;
+    int M_BLOCKINLINE = 1 << 3;
+    int M_BODY = 1 << 4;
+    int M_CELL = 1 << 5;
+    int M_COL = 1 << 6;
+    int M_DEF = 1 << 7;
+    int M_FORM = 1 << 8;
+    int M_FRAME = 1 << 9;
+    int M_HEAD = 1 << 10;
+    int M_HTML = 1 << 11;
+    int M_INLINE = 1 << 12;
+    int M_LEGEND = 1 << 13;
+    int M_LI = 1 << 14;
+    int M_NOLINK = 1 << 15;
+    int M_OPTION = 1 << 16;
+    int M_OPTIONS = 1 << 17;
+    int M_P = 1 << 18;
+    int M_PARAM = 1 << 19;
+    int M_TABLE = 1 << 20;
+    int M_TABULAR = 1 << 21;
+    int M_TR = 1 << 22;
     // End of model definitions
 
 }

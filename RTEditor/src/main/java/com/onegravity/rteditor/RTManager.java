@@ -110,7 +110,7 @@ public class RTManager implements RTToolbarListener, RTEditTextListener {
         /*
          * Toolbar(s) are never shown.
          */
-        HIDE;
+        HIDE
     }
 
     private ToolbarVisibility mToolbarVisibility = ToolbarVisibility.AUTOMATIC;

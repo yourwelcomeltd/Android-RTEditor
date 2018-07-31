@@ -297,8 +297,9 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     @Override
-    public boolean getFeature(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
-        Boolean b = (Boolean) theFeatures.get(name);
+    public boolean getFeature(String name) throws SAXNotRecognizedException
+    {
+        Boolean b = theFeatures.get(name);
         if (b == null) {
             throw new SAXNotRecognizedException("Unknown feature " + name);
         }
@@ -306,8 +307,9 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     @Override
-    public void setFeature(String name, boolean value) throws SAXNotRecognizedException, SAXNotSupportedException {
-        Boolean b = (Boolean) theFeatures.get(name);
+    public void setFeature(String name, boolean value) throws SAXNotRecognizedException
+    {
+        Boolean b = theFeatures.get(name);
         if (b == null) {
             throw new SAXNotRecognizedException("Unknown feature " + name);
         }
@@ -337,8 +339,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     @Override
-    public Object getProperty(String name) throws SAXNotRecognizedException,
-            SAXNotSupportedException {
+    public Object getProperty(String name) throws SAXNotRecognizedException
+    {
         if (name.equals(lexicalHandlerProperty)) {
             return theLexicalHandler == this ? null : theLexicalHandler;
         } else if (name.equals(scannerProperty)) {
@@ -496,7 +498,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     // Get an InputStream based on a publicid and a systemid
-    private InputStream getInputStream(String publicid, String systemid) throws IOException, SAXException {
+    private InputStream getInputStream(String publicid, String systemid) throws IOException
+    {
         URL basis = new URL("file", "", System.getProperty("user.dir") + "/.");
         URL url = new URL(basis, systemid);
         URLConnection c = url.openConnection();
@@ -520,7 +523,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     private int theEntity = 0; // needs to support chars past U+FFFF
 
     @Override
-    public void adup(char[] buff, int offset, int length) throws SAXException {
+    public void adup(char[] buff, int offset, int length)
+    {
         if (theNewElement != null && theAttributeName != null) {
             theNewElement.setAttribute(theAttributeName, null, theAttributeName);
             theAttributeName = null;
@@ -529,7 +533,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
 
     @SuppressLint("DefaultLocale")
     @Override
-    public void aname(char[] buff, int offset, int length) throws SAXException {
+    public void aname(char[] buff, int offset, int length)
+    {
         if (theNewElement != null) {
             // currently we don't rely on Schema to canonicalize attribute names.
             theAttributeName = makeName(buff, offset, length).toLowerCase();
@@ -537,7 +542,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     @Override
-    public void aval(char[] buff, int offset, int length) throws SAXException {
+    public void aval(char[] buff, int offset, int length)
+    {
         if (theNewElement != null && theAttributeName != null) {
             String value = new String(buff, offset, length);
             value = expandEntities(value);
@@ -587,7 +593,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     @Override
-    public void entity(char[] buff, int offset, int length) throws SAXException {
+    public void entity(char[] buff, int offset, int length)
+    {
         theEntity = lookupEntity(buff, offset, length);
     }
 
@@ -919,7 +926,7 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
                 lastc = c;
             }
             l.add(val.substring(s, e));
-            return (String[]) l.toArray(new String[0]);
+            return l.toArray(new String[0]);
         }
     }
 
@@ -938,7 +945,6 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
                 dst.append(ch);
                 suppressSpace = false;
             } else if (suppressSpace) { // normalizable whitespace or junk
-                ;
             } else {
                 dst.append(' ');
                 suppressSpace = true;
@@ -948,7 +954,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     @Override
-    public void gi(char[] buff, int offset, int length) throws SAXException {
+    public void gi(char[] buff, int offset, int length)
+    {
         if (theNewElement != null)
             return;
         String name = makeName(buff, offset, length);
@@ -999,7 +1006,8 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     }
 
     @Override
-    public void pitarget(char[] buff, int offset, int length) throws SAXException {
+    public void pitarget(char[] buff, int offset, int length)
+    {
         if (theNewElement != null)
             return;
         thePITarget = makeName(buff, offset, length).replace(':', '_');
@@ -1121,31 +1129,38 @@ public class Parser extends DefaultHandler implements ScanHandler, XMLReader, Le
     // Default LexicalHandler implementation
 
     @Override
-    public void comment(char[] ch, int start, int length) throws SAXException {
+    public void comment(char[] ch, int start, int length)
+    {
     }
 
     @Override
-    public void endCDATA() throws SAXException {
+    public void endCDATA()
+    {
     }
 
     @Override
-    public void endDTD() throws SAXException {
+    public void endDTD()
+    {
     }
 
     @Override
-    public void endEntity(String name) throws SAXException {
+    public void endEntity(String name)
+    {
     }
 
     @Override
-    public void startCDATA() throws SAXException {
+    public void startCDATA()
+    {
     }
 
     @Override
-    public void startDTD(String name, String publicid, String systemid) throws SAXException {
+    public void startDTD(String name, String publicid, String systemid)
+    {
     }
 
     @Override
-    public void startEntity(String name) throws SAXException {
+    public void startEntity(String name)
+    {
     }
 
 }

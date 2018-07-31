@@ -217,7 +217,6 @@ public class ElementType {
         if (name.equals("xmlns") || name.startsWith("xmlns:")) {
             return;
         }
-        ;
         String namespace = namespace(name, true);
         String localName = localName(name);
         int i = atts.getIndex(name);

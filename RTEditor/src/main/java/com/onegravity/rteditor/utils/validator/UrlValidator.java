@@ -315,11 +315,7 @@ public class UrlValidator implements Serializable {
             return false;
         }
 
-        if (!isValidFragment(urlMatcher.group(PARSE_URL_FRAGMENT))) {
-            return false;
-        }
-
-        return true;
+        return isValidFragment(urlMatcher.group(PARSE_URL_FRAGMENT));
     }
 
     /**
@@ -340,11 +336,7 @@ public class UrlValidator implements Serializable {
             return false;
         }
 
-        if (isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme.toLowerCase(Locale.ENGLISH))) {
-            return false;
-        }
-
-        return true;
+        return !isOff(ALLOW_ALL_SCHEMES) || allowedSchemes.contains(scheme.toLowerCase(Locale.ENGLISH));
     }
 
     /**
@@ -394,11 +386,7 @@ public class UrlValidator implements Serializable {
         }
 
         String extra = authorityMatcher.group(PARSE_AUTHORITY_EXTRA);
-        if (extra != null && extra.trim().length() > 0){
-            return false;
-        }
-
-        return true;
+        return extra == null || extra.trim().length() <= 0;
     }
 
     /**
@@ -422,11 +410,7 @@ public class UrlValidator implements Serializable {
 
         int slashCount = countToken("/", path);
         int dot2Count = countToken("..", path);
-        if (dot2Count > 0 && (slashCount - slash2Count - 1) <= dot2Count) {
-            return false;
-        }
-
-        return true;
+        return dot2Count <= 0 || (slashCount - slash2Count - 1) > dot2Count;
     }
 
     /**

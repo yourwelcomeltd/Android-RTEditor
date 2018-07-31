@@ -550,7 +550,7 @@ public class HTMLScanner implements Scanner, Locator {
         }
     }
 
-    private void save(ScanHandler h) throws IOException, SAXException {
+    private void save(ScanHandler h) throws SAXException {
         if (theSize >= theOutputBuffer.length - 20) {
             if (theState == S_PCDATA || theState == S_CDATA) {
                 // Return a buffer-sized chunk of PCDATA

@@ -27,49 +27,49 @@ import java.io.Serializable;
  * <p>
  * Note that every RTMedia object has to be Serializable.
  */
-public abstract interface RTMedia extends Serializable {
+public interface RTMedia extends Serializable {
 
     /**
      * Returns the file path of the media file (e.g. /data/.../image.png).
      * This can be any format used to locate the file (content://..., file://..., cid:...).
      */
-    public String getFilePath(RTFormat format);
+    String getFilePath(RTFormat format);
 
     /**
      * Returns the file name (e.g. image.png)
      */
-    public String getFileName();
+    String getFileName();
 
     /**
      * Returns the file extension (e.g. png)
      */
-    public String getFileExtension();
+    String getFileExtension();
 
     /**
      * @return True if the media file exists, False otherwise
      */
-    public boolean exists();
+    boolean exists();
 
     /**
      * Remove / delete the media file. This is used if the user removes the
      * object in the editor or if the content of the editor is dismissed (not
      * saved).
      */
-    public void remove();
+    void remove();
 
     /**
      * @return The width of the media
      */
-    public int getWidth();
+    int getWidth();
 
     /**
      * @return The height of the media
      */
-    public int getHeight();
+    int getHeight();
 
     /**
      * @return The size of the media in bytes
      */
-    public long getSize();
+    long getSize();
 
 }

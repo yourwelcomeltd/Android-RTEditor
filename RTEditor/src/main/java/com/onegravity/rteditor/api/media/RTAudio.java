@@ -23,8 +23,8 @@ package com.onegravity.rteditor.api.media;
  */
 public interface RTAudio extends RTMedia {
 
-    public String getAudioPreviewImage();
+    String getAudioPreviewImage();
 
-    public void setAudioPreviewImage(String audioPreviewImage);
+    void setAudioPreviewImage(String audioPreviewImage);
 
 }

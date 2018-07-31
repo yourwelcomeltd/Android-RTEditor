@@ -26,7 +26,7 @@ import java.io.IOException;
 public class VideoProcessor extends MediaProcessor {
 
     public interface VideoProcessorListener extends MediaProcessorListener {
-        public void onVideoProcessed(RTVideo video);
+        void onVideoProcessed(RTVideo video);
     }
 
     public VideoProcessor(String originalFile, RTMediaFactory<RTImage, RTAudio, RTVideo> mediaFactory, VideoProcessorListener listener) {
@@ -34,7 +34,8 @@ public class VideoProcessor extends MediaProcessor {
     }
 
     @Override
-    protected void processMedia() throws IOException, Exception {
+    protected void processMedia()
+    {
         // TODO
     }
 

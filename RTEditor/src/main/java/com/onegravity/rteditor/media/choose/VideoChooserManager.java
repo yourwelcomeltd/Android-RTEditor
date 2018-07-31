@@ -43,7 +43,7 @@ class VideoChooserManager extends MediaChooserManager implements VideoProcessorL
         /**
          * Callback method to inform the caller that a video file has been processed
          */
-        public void onVideoChosen(RTVideo video);
+        void onVideoChosen(RTVideo video);
     }
 
     private static final String CAPTURED_VIDEO_TEMPLATE = "CAPTURED_VIDEO.mp4";

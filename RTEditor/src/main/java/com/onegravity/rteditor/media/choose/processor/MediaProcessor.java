@@ -41,7 +41,7 @@ import java.net.URL;
 public abstract class MediaProcessor implements Runnable {
 
     public interface MediaProcessorListener {
-        public void onError(String reason);
+        void onError(String reason);
     }
 
     final private MediaProcessorListener mListener;
@@ -71,9 +71,10 @@ public abstract class MediaProcessor implements Runnable {
         return mOriginalFile;
     }
 
-    protected abstract void processMedia() throws IOException, Exception;
+    protected abstract void processMedia() throws Exception;
 
-    protected InputStream getInputStream() throws IOException, Exception {
+    protected InputStream getInputStream()
+    {
         InputStream in = null;
         if (mOriginalFile.startsWith("http")) {
             // http download
@@ -89,7 +90,8 @@ public abstract class MediaProcessor implements Runnable {
         return in;
     }
 
-    protected String getMimeType() throws IOException, Exception {
+    protected String getMimeType()
+    {
         if (mOriginalFile.startsWith("content://")) {
             // ContentProvider file
             ContentResolver resolver = RTApi.getApplicationContext().getContentResolver();

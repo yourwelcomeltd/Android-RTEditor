@@ -33,7 +33,7 @@ public interface Scanner {
      * @param h A ScanHandler to report events to
      */
 
-    public void scan(Reader r, ScanHandler h) throws IOException, SAXException;
+    void scan(Reader r, ScanHandler h) throws IOException, SAXException;
 
     /**
      * Reset the embedded locator.
@@ -42,12 +42,12 @@ public interface Scanner {
      * @param systemid The systemid of the source
      */
 
-    public void resetDocumentLocator(String publicid, String systemid);
+    void resetDocumentLocator(String publicid, String systemid);
 
     /**
      * Signal to the scanner to start CDATA content mode.
      */
 
-    public void startCDATA();
+    void startCDATA();
 
 }

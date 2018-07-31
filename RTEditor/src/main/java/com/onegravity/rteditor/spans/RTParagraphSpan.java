@@ -21,6 +21,6 @@ package com.onegravity.rteditor.spans;
  */
 public interface RTParagraphSpan<V> {
 
-    public RTParagraphSpan<V> createClone();
+    RTParagraphSpan<V> createClone();
 
 }

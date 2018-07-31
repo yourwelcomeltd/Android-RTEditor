@@ -32,7 +32,7 @@ public abstract class Constants {
 
         private int mRequestCode;
 
-        private MediaAction(int requestCode) {
+        MediaAction(int requestCode) {
             mRequestCode = requestCode;
         }
 

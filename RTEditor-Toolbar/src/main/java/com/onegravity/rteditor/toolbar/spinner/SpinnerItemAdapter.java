@@ -80,7 +80,7 @@ public class SpinnerItemAdapter<T extends SpinnerItem> extends BaseAdapter imple
         View spinnerView = mInflater.inflate(mSpinnerId, parent, false);
 
         mParent = parent;
-        TextView spinnerTitleView = (TextView) spinnerView.findViewById(R.id.title);
+        TextView spinnerTitleView = spinnerView.findViewById(R.id.title);
         updateSpinnerTitle(spinnerTitleView);
         return spinnerView;
     }
@@ -122,7 +122,7 @@ public class SpinnerItemAdapter<T extends SpinnerItem> extends BaseAdapter imple
 
     private void bindView(int position, View spinnerItemView, SpinnerItem spinnerItem) {
         // configure spinner name
-        TextView nameView = (TextView) spinnerItemView.findViewById(R.id.spinner_name);
+        TextView nameView = spinnerItemView.findViewById(R.id.spinner_name);
         spinnerItem.formatNameView(nameView);
 
         // configure spinner color
@@ -153,7 +153,7 @@ public class SpinnerItemAdapter<T extends SpinnerItem> extends BaseAdapter imple
         mSpinnerTitle = title;
         if (mParent != null) {
             try {
-                TextView spinnerTitleView = ((TextView) mParent.getChildAt(0).findViewById(R.id.title));
+                TextView spinnerTitleView = mParent.getChildAt(0).findViewById(R.id.title);
                 updateSpinnerTitle(spinnerTitleView);
             } catch (Exception ignore) { /* this is a hack but better safe than sorry */ }
         }

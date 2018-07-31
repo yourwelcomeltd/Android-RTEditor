@@ -23,8 +23,8 @@ package com.onegravity.rteditor.api.media;
  */
 public interface RTVideo extends RTMedia {
 
-    public String getVideoPreviewImage();
+    String getVideoPreviewImage();
 
-    public void setVideoPreviewImage(String videoPreviewImage);
+    void setVideoPreviewImage(String videoPreviewImage);
 
 }

@@ -40,6 +40,6 @@ public interface AutoDetector {
      * @return A Reader that reads from the InputStream
      */
 
-    public Reader autoDetectingReader(InputStream i);
+    Reader autoDetectingReader(InputStream i);
 
 }

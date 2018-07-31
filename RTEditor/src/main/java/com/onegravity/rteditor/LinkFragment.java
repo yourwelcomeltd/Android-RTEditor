@@ -133,14 +133,14 @@ public class LinkFragment extends DialogFragment {
             } catch (Exception ignore) {}
         }
         final String url = tmp;
-        final TextView addressView = ((TextView) view.findViewById(R.id.linkURL));
+        final TextView addressView = view.findViewById(R.id.linkURL);
         if (url != null) {
             addressView.setText(url);
         }
 
         // link text
         String linkText = args.getString(LINK_TEXT);
-        final TextView textView = ((TextView) view.findViewById(R.id.linkText));
+        final TextView textView = view.findViewById(R.id.linkText);
         if (linkText != null) {
             textView.setText(linkText);
         }

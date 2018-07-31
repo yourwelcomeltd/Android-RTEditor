@@ -35,18 +35,18 @@ public class MonitoredActivity extends AppCompatActivity {
 
     // ****************************************** MonitoredActivity Methods *******************************************
 
-    public static interface LifeCycleListener {
-        public void onActivityCreated(Activity activity);
+    public interface LifeCycleListener {
+        void onActivityCreated(Activity activity);
 
-        public void onActivityDestroyed(Activity activity);
+        void onActivityDestroyed(Activity activity);
 
-        public void onActivityPaused(Activity activity);
+        void onActivityPaused(Activity activity);
 
-        public void onActivityResumed(Activity activity);
+        void onActivityResumed(Activity activity);
 
-        public void onActivityStarted(Activity activity);
+        void onActivityStarted(Activity activity);
 
-        public void onActivityStopped(Activity activity);
+        void onActivityStopped(Activity activity);
     }
 
     public static class LifeCycleAdapter implements LifeCycleListener {
@@ -177,7 +177,7 @@ public class MonitoredActivity extends AppCompatActivity {
     }
 
     public interface ForegroundJob<T> {
-        public T runForegroundJob();
+        T runForegroundJob();
     }
 
     private class Job<T> extends LifeCycleAdapter implements ForegroundJob<T> {

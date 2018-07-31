@@ -21,5 +21,5 @@ package com.onegravity.rteditor.effects;
  */
 public enum SpanCollectMode {
     EXACT,          // find spans exactly within the defined selection (don't use span flags)
-    SPAN_FLAGS;     // consider the span flags when deciding whether to include a span
+    SPAN_FLAGS     // consider the span flags when deciding whether to include a span
 }

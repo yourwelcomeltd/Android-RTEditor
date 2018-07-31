@@ -524,7 +524,7 @@ public class FilenameUtils {
      * @since 2.2
      */
     public static boolean directoryContains(final String canonicalParent, final String canonicalChild)
-            throws IOException {
+    {
 
         // Fail fast against NullPointerException
         if (canonicalParent == null) {
