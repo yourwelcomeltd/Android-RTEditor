@@ -18,7 +18,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -35,7 +35,7 @@ android {
 
 dependencies {
     // use this to compile/run locally
-    compile project(':RTEditor')
+    implementation project(':RTEditor')
 
     // or this to use the latest published library
     //compile 'com.1gravity:android-rteditor-core:1.6.2'

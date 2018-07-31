@@ -18,7 +18,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    compile 'com.1gravity:android-colorpicker:2.0.2'
+    api 'com.1gravity:android-colorpicker:2.0.2'
 }
 
 apply from: '../android-artifacts.gradle'
